@@ -1,0 +1,19 @@
+# This file stores configurations for your Shopify app.
+# https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "Bulk Image Uploader"
+client_id = ""
+application_url = "https://localhost"
+embedded = true
+
+[access_scopes]
+scopes = "write_products,read_products"
+
+[auth]
+redirect_urls = [ "https://localhost/auth/callback" ]
+
+[webhooks]
+api_version = "2025-01"
+
+[pos]
+embedded = false
