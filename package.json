@@ -12,6 +12,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@flydotio/litestream": "^1.0.1",
     "@prisma/client": "^5.22.0",
     "@remix-run/node": "^2.15.2",
     "@remix-run/react": "^2.15.2",
@@ -43,5 +44,8 @@
   "trustedDependencies": [
     "@shopify/plugin-cloudflare"
   ],
-  "author": ""
+  "author": "",
+  "dockerfile": {
+    "litestream": true
+  }
 }
