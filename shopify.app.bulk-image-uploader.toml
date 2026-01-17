@@ -2,12 +2,11 @@
 
 client_id = "1e3355f56ea82f61c55899e32b35a4c3"
 name = "Bulk Image Uploader"
-application_url = "https://shopify.dev/apps/default-app-home"
+application_url = "https://bulk-image-uploader-appstore.fly.dev/apps/default-app-home"
 embedded = true
 
 [build]
 automatically_update_urls_on_dev = true
-include_config_on_deploy = true
 
 [webhooks]
 api_version = "2026-04"
@@ -17,4 +16,8 @@ api_version = "2026-04"
 scopes = "read_products,write_products"
 
 [auth]
-redirect_urls = [ "https://shopify.dev/apps/default-app-home/api/auth" ]
+redirect_urls = [
+  "https://bulk-image-uploader-appstore.fly.dev/auth/callback",
+  "https://bulk-image-uploader-appstore.fly.dev/auth/shopify/callback",
+  "https://bulk-image-uploader-appstore.fly.dev/api/auth/callback"
+]

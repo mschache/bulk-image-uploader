@@ -32,7 +32,7 @@ export function SettingsCard({ settings, onChange, disabled = false, maxPosition
   };
 
   const handleAltTextChange = (position: number, value: string) => {
-    const newAltTextByPosition = { ...settings.altTextByPosition };
+    const newAltTextByPosition = { ...(settings.altTextByPosition || {}) };
     if (value.trim()) {
       newAltTextByPosition[position] = value.trim();
     } else {
@@ -40,9 +40,6 @@ export function SettingsCard({ settings, onChange, disabled = false, maxPosition
     }
     onChange({ ...settings, altTextByPosition: newAltTextByPosition });
   };
-
-  // Show positions 1 through max(maxPosition, 6) when SEO is enabled
-  const positionsToShow = Math.max(maxPosition, 6);
 
   return (
     <Card>
@@ -112,18 +109,18 @@ export function SettingsCard({ settings, onChange, disabled = false, maxPosition
                     <BlockStack gap="200">
                       <Text as="span" variant="bodySm" tone="subdued">
                         Custom alt text per position (leave empty for "View ##"):
+                        {maxPosition > 0 && ` Detected up to position ${String(maxPosition).padStart(2, "0")}`}
                       </Text>
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
-                        {Array.from({ length: positionsToShow }, (_, i) => i + 1).map((position) => (
+                        {Array.from({ length: Math.max(maxPosition, 6) }, (_, i) => i + 1).map((position) => (
                           <TextField
-                            key={position}
+                            key={`pos-${position}`}
                             label={`Position ${String(position).padStart(2, "0")}`}
                             labelHidden
                             placeholder={`${String(position).padStart(2, "0")}: View ${String(position).padStart(2, "0")}`}
-                            value={settings.altTextByPosition[position] || ""}
+                            value={settings.altTextByPosition?.[position] ?? ""}
                             onChange={(value) => handleAltTextChange(position, value)}
                             disabled={disabled}
-                            size="slim"
                             autoComplete="off"
                           />
                         ))}

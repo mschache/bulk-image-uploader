@@ -5,7 +5,6 @@ import {
   BlockStack,
   Text,
   InlineStack,
-  Thumbnail,
   Button,
   Banner,
   Box,
@@ -325,57 +324,26 @@ export function UploadDropZone({
   );
 }
 
-// Safe thumbnail component that handles errors gracefully
+// Simple thumbnail using Polaris icon - avoids blob URL issues
 function ImageThumbnail({ file }: { file: ParsedFile }) {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const placeholderUrl = "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png";
-
-  useEffect(() => {
-    let url: string | null = null;
-    let mounted = true;
-
-    const createUrl = async () => {
-      try {
-        // Check if file object exists and has valid type
-        if (!file.file || !file.file.type) {
-          return;
-        }
-
-        // Only create URL for valid image types
-        if (!VALID_IMAGE_TYPES.includes(file.file.type)) {
-          return;
-        }
-
-        // Create blob URL
-        url = URL.createObjectURL(file.file);
-
-        if (mounted) {
-          setImageUrl(url);
-        }
-      } catch (err) {
-        console.warn("Failed to create thumbnail URL:", err);
-      }
-    };
-
-    createUrl();
-
-    return () => {
-      mounted = false;
-      if (url) {
-        try {
-          URL.revokeObjectURL(url);
-        } catch {
-          // Ignore revoke errors
-        }
-      }
-    };
-  }, [file.file]);
-
   return (
-    <Thumbnail
-      size="small"
-      alt={file.originalFilename}
-      source={imageUrl || placeholderUrl}
-    />
+    <div
+      style={{
+        width: "40px",
+        height: "40px",
+        borderRadius: "4px",
+        backgroundColor: file.isValid ? "var(--p-color-bg-surface-secondary)" : "var(--p-color-bg-surface-critical)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: "10px",
+        color: "var(--p-color-text-subdued)",
+        fontWeight: 500,
+      }}
+    >
+      {file.file?.type?.includes("png") ? "PNG" :
+       file.file?.type?.includes("gif") ? "GIF" :
+       file.file?.type?.includes("webp") ? "WEBP" : "JPG"}
+    </div>
   );
 }

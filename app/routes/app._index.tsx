@@ -169,10 +169,12 @@ export default function Index() {
   const [uploadStatus, setUploadStatus] = useState("");
   const progressRef = useRef(0);
 
-  const validFilesCount = files.filter((f) => f.isValid).length;
+  const validFiles = files.filter((f) => f.isValid);
+  const validFilesCount = validFiles.length;
   const canProcess = validFilesCount > 0 && !isProcessing;
-  const validSortOrders = files.filter((f) => f.isValid).map((f) => f.sortOrder);
-  const maxPosition = validSortOrders.length > 0 ? Math.max(...validSortOrders) : 0;
+  const maxPosition = validFilesCount > 0
+    ? Math.max(...validFiles.map((f) => f.sortOrder))
+    : 0;
 
   // Handle fetcher response
   useEffect(() => {

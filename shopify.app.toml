@@ -3,14 +3,18 @@
 
 name = "Bulk Image Uploader"
 client_id = ""
-application_url = "https://localhost"
+application_url = "https://bulk-image-uploader-appstore.fly.dev"
 embedded = true
 
 [access_scopes]
 scopes = "write_products,read_products"
 
 [auth]
-redirect_urls = [ "https://localhost/auth/callback" ]
+redirect_urls = [
+  "https://bulk-image-uploader-appstore.fly.dev/auth/callback",
+  "https://bulk-image-uploader-appstore.fly.dev/auth/shopify/callback",
+  "https://bulk-image-uploader-appstore.fly.dev/api/auth/callback"
+]
 
 [webhooks]
 api_version = "2025-01"
